@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+
 import './App.css';
+import ToDoForm from './components/ToDoForm';
 
 function App() {
+  const [toDoItems, setToDoItems] = useState({
+    level1item1: { itemName: '', completed: false },
+    level1item2: { itemName: '', completed: false },
+    level1MiniBoss: { itemName: '', completed: false },
+    level2item1: { itemName: '', completed: false },
+    level2item2: { itemName: '', completed: false },
+    level2MiniBoss: { itemName: '', completed: false },
+    toDoBoss: { itemName: '', completed: false },
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ToDoForm toDoItems={toDoItems} setToDoItems={setToDoItems} />
+      {/* we are going to have a progress bar display here using the above state */}
     </div>
   );
 }
