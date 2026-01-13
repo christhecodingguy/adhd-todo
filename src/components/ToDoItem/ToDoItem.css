@@ -1,0 +1,18 @@
+input[type="text"] {
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    width: 70%;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    color: #aaa;
+}
+
+.to-do-item {
+    margin-bottom: 10px;
+}
