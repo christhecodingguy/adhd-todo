@@ -21,3 +21,11 @@ h1 {
     font-weight: bold;
     font-size: 1em;
 }
+
+.collapsed > * {
+    display: none;
+}
+
+.collapsed > legend {
+    display: block;
+}

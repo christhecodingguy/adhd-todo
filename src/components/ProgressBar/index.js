@@ -22,7 +22,8 @@ function isToDoListFilled(progressItems) {
     // want: two items, a mini boss, and a boss = progress bar points count would be 1+1+2+3 = 7
     const requiredPoints = 7;
     const currentPoints = progressItems.reduce((total, item) => total + (factors[item.itemType] || 1), 0);
-    return currentPoints >= requiredPoints;
+    const hasBoss = progressItems.some(item => item.itemType === ITEM_TYPES.BOSS);
+    return currentPoints >= requiredPoints && hasBoss;
 }
 
 export default function ProgressBar({ toDoItems }) {
@@ -34,11 +35,9 @@ export default function ProgressBar({ toDoItems }) {
         completed: isToDoListFilled(progressItems),
     };
 
-    progressItems.unshift(toDoListStarterPoint);
-
     return (
         <div id="progress-bar" data-testid="progress-bar">
-            {progressItems.map(item => progressPoints(item)).flat()}
+            {[toDoListStarterPoint, ...progressItems].map(item => progressPoints(item)).flat()}
         </div>
     );
 }

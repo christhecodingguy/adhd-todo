@@ -3,6 +3,7 @@ import ToDoItem from '../ToDoItem';
 import './ToDoForm.css';
 
 export default function ToDoForm({ toDoItems, setToDoItems }) {
+    const [collapsed, setCollapsed] = React.useState(true);
 
     function setCompletedForItem(itemKey, completed) {
         setToDoItems(currentItemsState => ({
@@ -22,6 +23,19 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
                 itemName: itemName
             }
         }));
+    }
+
+    function toggleLevel2CollapsedState() {
+        if (!collapsed) {
+            setItemNameForItem('level2item1', '');
+            setItemNameForItem('level2item2', '');
+            setItemNameForItem('level2MiniBoss', '');
+            setCompletedForItem('level2item1', false);
+            setCompletedForItem('level2item2', false);
+            setCompletedForItem('level2MiniBoss', false);
+        }
+
+        setCollapsed(!collapsed);
     }
 
     return (
@@ -53,29 +67,28 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
             </fieldset>
 
             {
-                toDoItems.level1item1.itemName !== '' && toDoItems.level1item2.itemName !== ''
-                    && toDoItems.level1MiniBoss.itemName !== '' ?
-                    (<fieldset>
-                        <legend>Level 2 Tasks</legend>
+                toDoItems.level1MiniBoss.itemName !== '' ?
+                    (<fieldset className={collapsed ? 'collapsed' : ''}>
+                        <legend onClick={() => toggleLevel2CollapsedState()}>{collapsed ? '+' : '-'} Level 2 Tasks</legend>
                         <ToDoItem itemName={toDoItems.level2item1.itemName}
                             enabled={toDoItems.level2item1.itemName !== ''}
                             completed={toDoItems.level2item1.completed}
                             setItemName={(itemName) => setItemNameForItem('level2item1', itemName)}
-                            setCompleted={(completed) => setCompletedForItem('level2item1', completed)} 
-                            testId="level2item1" 
+                            setCompleted={(completed) => setCompletedForItem('level2item1', completed)}
+                            testId="level2item1"
                             label="Task 3" />
                         <ToDoItem itemName={toDoItems.level2item2.itemName}
                             enabled={toDoItems.level2item2.itemName !== ''}
                             completed={toDoItems.level2item2.completed}
                             setItemName={(itemName) => setItemNameForItem('level2item2', itemName)}
-                            setCompleted={(completed) => setCompletedForItem('level2item2', completed)} 
+                            setCompleted={(completed) => setCompletedForItem('level2item2', completed)}
                             testId="level2item2"
                             label="Task 4" />
                         <ToDoItem itemName={toDoItems.level2MiniBoss.itemName}
                             enabled={toDoItems.level2item1.completed && toDoItems.level2item2.completed}
                             completed={toDoItems.level2MiniBoss.completed}
                             setItemName={(itemName) => setItemNameForItem('level2MiniBoss', itemName)}
-                            setCompleted={(completed) => setCompletedForItem('level2MiniBoss', completed)} 
+                            setCompleted={(completed) => setCompletedForItem('level2MiniBoss', completed)}
                             testId="level2MiniBoss"
                             label="Mini Boss 2" />
                     </fieldset>)
@@ -92,7 +105,7 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
                     completed={toDoItems.toDoBoss.completed}
                     setItemName={(itemName) => setItemNameForItem('toDoBoss', itemName)}
                     setCompleted={(completed) => setCompletedForItem('toDoBoss', completed)}
-                    testId="toDoBoss" 
+                    testId="toDoBoss"
                     label="Main Boss" />
             </fieldset>
         </div>

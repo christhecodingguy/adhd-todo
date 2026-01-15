@@ -4,6 +4,7 @@ To do:
 - [ ] create and style progress bar
     - [x] test creation of progress points
     - [ ] test completion state
+- [ ] Change behavior to add a new level when '+' is clicked
 - [ ] store state in localstorage (so you can leave and come back)
 - [ ] add timer for tasks
 - [ ] add settings to define timer duration
