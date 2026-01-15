@@ -1,0 +1,20 @@
+#progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 60%;
+}
+
+.progress-point {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    margin: 0 5px;
+}
+
+.progress-point.completed {
+    background-color: #ccc;
+}
