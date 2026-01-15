@@ -9,7 +9,7 @@
   text-align: left;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 800px) {
     .container {
         width: 90%;
     }

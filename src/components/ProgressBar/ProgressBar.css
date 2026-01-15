@@ -16,3 +16,15 @@
 .progress-point.completed {
     background-color: #ccc;
 }
+
+
+fieldset {
+    margin-bottom: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+}   
+
+legend {
+    margin-bottom: 10px;
+}

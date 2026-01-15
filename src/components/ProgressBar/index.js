@@ -36,8 +36,9 @@ export default function ProgressBar({ toDoItems }) {
     };
 
     return (
-        <div id="progress-bar" data-testid="progress-bar">
+        <fieldset id="progress-bar" data-testid="progress-bar">
+            <legend>Progress</legend>
             {[toDoListStarterPoint, ...progressItems].map(item => progressPoints(item)).flat()}
-        </div>
+        </fieldset>
     );
 }
