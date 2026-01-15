@@ -85,7 +85,10 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
             <fieldset>
                 <legend>Boss Task</legend>
                 <ToDoItem itemName={toDoItems.toDoBoss.itemName}
-                    enabled={toDoItems.level1MiniBoss.completed && toDoItems.level2MiniBoss.completed}
+                    enabled={
+                        (toDoItems.level1MiniBoss.completed && toDoItems.level2MiniBoss.completed) ||
+                        (toDoItems.level1MiniBoss.completed && toDoItems.level2MiniBoss.itemName === '')
+                    }
                     completed={toDoItems.toDoBoss.completed}
                     setItemName={(itemName) => setItemNameForItem('toDoBoss', itemName)}
                     setCompleted={(completed) => setCompletedForItem('toDoBoss', completed)}
