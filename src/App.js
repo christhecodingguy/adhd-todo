@@ -17,7 +17,7 @@ function App() {
   });
 
   return (
-    <div className="App">
+    <div className="App container">
       <ToDoForm toDoItems={toDoItems} setToDoItems={setToDoItems} />
       <ProgressBar toDoItems={toDoItems} />
       {/* we are going to have a progress bar display here using the above state */}

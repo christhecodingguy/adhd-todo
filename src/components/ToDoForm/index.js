@@ -63,7 +63,8 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
                     setItemName={(itemName) => setItemNameForItem('level1MiniBoss', itemName)}
                     setCompleted={(completed) => setCompletedForItem('level1MiniBoss', completed)}
                     testId="level1MiniBoss"
-                    label="Mini Boss 1" />
+                    label="Mini Boss 1"
+                    boss={true} />
             </fieldset>
 
             {
@@ -90,7 +91,8 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
                             setItemName={(itemName) => setItemNameForItem('level2MiniBoss', itemName)}
                             setCompleted={(completed) => setCompletedForItem('level2MiniBoss', completed)}
                             testId="level2MiniBoss"
-                            label="Mini Boss 2" />
+                            label="Mini Boss 2"
+                            boss={true} />
                     </fieldset>)
                     : ''
             }
@@ -106,7 +108,8 @@ export default function ToDoForm({ toDoItems, setToDoItems }) {
                     setItemName={(itemName) => setItemNameForItem('toDoBoss', itemName)}
                     setCompleted={(completed) => setCompletedForItem('toDoBoss', completed)}
                     testId="toDoBoss"
-                    label="Main Boss" />
+                    label="Main Boss"
+                    boss={true} />
             </fieldset>
         </div>
     );

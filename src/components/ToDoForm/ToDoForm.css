@@ -4,12 +4,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-#to-do-form {
-    width: 60%;
-    margin: 0 auto;
-    text-align: left;
-}
-
 #to-do-form fieldset {
     margin-bottom: 20px;
     padding: 10px 25px;

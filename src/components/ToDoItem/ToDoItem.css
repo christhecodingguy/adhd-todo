@@ -16,3 +16,17 @@ label {
 .to-do-item {
     margin-bottom: 10px;
 }
+
+@media (max-width: 320px) {
+    label {
+        display: none;
+    }
+
+    input[type="text"] {
+        width: 85%;
+    }
+
+    .boss input[type="text"] {
+        border-bottom: 3px double #000;
+    }
+}
