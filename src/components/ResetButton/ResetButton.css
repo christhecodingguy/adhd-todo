@@ -1,0 +1,15 @@
+.reset-button {
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #fff;
+  border: 1px solid #aa4d4d;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background-color: #ff6d6d;
+  color: #fff;
+}

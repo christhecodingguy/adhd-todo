@@ -7,7 +7,7 @@ describe('ProgressBar Component', () => {
         render(<ProgressBar toDoItems={{}} />);
 
         expect(screen.getByTestId('progress-bar')).toBeInTheDocument();
-        expect(screen.getByTestId('progress-bar').childNodes.length).toBe(1);
+        expect(screen.getByTestId('progress-bar').childNodes.length).toBe(2);
     });
 
     test('renders single progress points for regular items', () => {
@@ -24,7 +24,7 @@ describe('ProgressBar Component', () => {
         render(<ProgressBar toDoItems={toDoItems} />);
 
         const progressBar = screen.getByTestId('progress-bar');
-        expect(progressBar.childNodes.length).toBe(3);
+        expect(progressBar.childNodes.length).toBe(4);
 
     });
 
@@ -42,7 +42,7 @@ describe('ProgressBar Component', () => {
         render(<ProgressBar toDoItems={toDoItems} />);
 
         const progressBar = screen.getByTestId('progress-bar');
-        expect(progressBar.childNodes.length).toBe(5);
+        expect(progressBar.childNodes.length).toBe(6);
 
     });
 
@@ -60,7 +60,7 @@ describe('ProgressBar Component', () => {
         render(<ProgressBar toDoItems={toDoItems} />);
 
         const progressBar = screen.getByTestId('progress-bar');
-        expect(progressBar.childNodes.length).toBe(8);
+        expect(progressBar.childNodes.length).toBe(9);
 
     });
 });
