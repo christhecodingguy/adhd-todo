@@ -6,27 +6,40 @@ import ToDoForm from './components/ToDoForm';
 import ProgressBar from './components/ProgressBar';
 import { ResetButton } from './components/ResetButton';
 
-const initialToDoItems = {
-  level1item1: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-  level1item2: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-  level1MiniBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.MINI_BOSS },
-  level2item1: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-  level2item2: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-  level2MiniBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.MINI_BOSS },
-  toDoBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.BOSS },
-};
+const initialToDoItemsList = [
+  {
+    item1: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
+    item2: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
+    miniBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.MINI_BOSS },
+  },
+  {
+    item1: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
+    item2: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
+    miniBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.MINI_BOSS },
+  },
+  {
+    boss: { itemName: '', completed: false, itemType: ITEM_TYPES.BOSS },
+  }
+];
 
 const TO_DO_ITEMS_KEY = 'toDoItems';
 function App() {
-  const [toDoItems, setToDoItems] = useLocalstorage(TO_DO_ITEMS_KEY, { ...initialToDoItems });
+  const [toDoItems, setToDoItems] = useLocalstorage(TO_DO_ITEMS_KEY, { ...initialToDoItemsList });
+  const [formDirtyState, setFormDirtyState] = useLocalstorage('formDirtyState', { isDirty: false });
 
   function resetToDoItems() {
-    setToDoItems({ ...initialToDoItems });
+    setToDoItems({ ...initialToDoItemsList });
+    setFormDirtyState({ isDirty: false });
+  }
+
+  function updateTodoItems(newToDoItems) {
+    setToDoItems(newToDoItems);
+    setFormDirtyState({ isDirty: true });
   }
 
   return (
     <div className="App container">
-      <ToDoForm toDoItems={toDoItems} setToDoItems={setToDoItems} />
+      <ToDoForm toDoItems={toDoItems} setToDoItems={updateTodoItems} formDirtyState={formDirtyState} />
       <ResetButton resetToDoItems={resetToDoItems} />
       <ProgressBar toDoItems={toDoItems} />
     </div>

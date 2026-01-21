@@ -13,7 +13,6 @@ export function useLocalstorage(key, initialValue) {
     const [state, setState] = useState(Object.keys(storedData).length >= Object.keys(initialValue).length ? storedData : initialValue);
 
     function updateStore(newState) {
-        console.log(newState);
         const updatedState = {
             ...state,
             ...typeof newState === 'function' ? newState(state) : newState

@@ -1,116 +1,79 @@
-import React from 'react';
-import ToDoItem from '../ToDoItem';
+import React, { useEffect } from 'react';
+import { useLocalstorage } from '../../hooks/useLocalstorage';
+
+import LevelTasks from './LevelTasks';
+import BossTask from './BossTask';
+
 import './ToDoForm.css';
 
-export default function ToDoForm({ toDoItems, setToDoItems }) {
-    const [collapsed, setCollapsed] = React.useState(true);
+export default function ToDoForm({ toDoItems, setToDoItems, formDirtyState }) {
+    const [collapsedState, setCollapsed] = useLocalstorage('level2Collapsed', { collapsed: true });
 
-    function setCompletedForItem(itemKey, completed) {
-        setToDoItems(currentItemsState => ({
-            ...currentItemsState,
-            [itemKey]: {
-                ...currentItemsState[itemKey],
-                completed: completed
-            }
-        }));
+    useEffect(() => {
+        if (!formDirtyState.isDirty) {
+            setCollapsed({ collapsed: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- want to run only when formDirtyState changes
+    }, [formDirtyState]);
+
+    function setStateForItem(index, itemKey, key, state) {
+        setToDoItems(currentItemsState => {
+            const newItemState = [...Object.values(currentItemsState)];
+            newItemState[index] = {
+                ...newItemState[index],
+                [itemKey]: {
+                    ...newItemState[index][itemKey],
+                    [key]: state
+                }
+            };
+            return newItemState;
+        });
     }
 
-    function setItemNameForItem(itemKey, itemName) {
-        setToDoItems(currentItemsState => ({
-            ...currentItemsState,
-            [itemKey]: {
-                ...currentItemsState[itemKey],
-                itemName: itemName
-            }
-        }));
-    }
+    const setCompletedForItem = (index, itemKey) => (completed) => setStateForItem(index, itemKey, 'completed', completed);
+    const setItemNameForItem = (index, itemKey) => (itemName) => setStateForItem(index, itemKey, 'itemName', itemName);
 
     function toggleLevel2CollapsedState() {
-        if (!collapsed) {
-            setItemNameForItem('level2item1', '');
-            setItemNameForItem('level2item2', '');
-            setItemNameForItem('level2MiniBoss', '');
-            setCompletedForItem('level2item1', false);
-            setCompletedForItem('level2item2', false);
-            setCompletedForItem('level2MiniBoss', false);
+        if (!collapsedState.collapsed) {
+            setToDoItems(currentItemsState => {
+                const newItemState = [...Object.values(currentItemsState)];
+                newItemState[1] = {
+                    item1: { itemName: '', completed: false, itemType: 'item' },
+                    item2: { itemName: '', completed: false, itemType: 'item' },
+                    miniBoss: { itemName: '', completed: false, itemType: 'mini_boss' },
+                };
+                return newItemState;
+            });
         }
 
-        setCollapsed(!collapsed);
+        setCollapsed({ collapsed: !collapsedState.collapsed });
     }
 
     return (
         <div id="to-do-form">
             <h1>ADHD To-Do List</h1>
-            <fieldset>
-                <legend>Level 1 Tasks</legend>
-                <ToDoItem itemName={toDoItems.level1item1.itemName}
-                    enabled={toDoItems.level1item1.itemName !== ''}
-                    completed={toDoItems.level1item1.completed}
-                    setItemName={(itemName) => setItemNameForItem('level1item1', itemName)}
-                    setCompleted={(completed) => setCompletedForItem('level1item1', completed)}
-                    testId="level1item1"
-                    label="Task 1" />
-                <ToDoItem itemName={toDoItems.level1item2.itemName}
-                    enabled={toDoItems.level1item2.itemName !== ''}
-                    completed={toDoItems.level1item2.completed}
-                    setItemName={(itemName) => setItemNameForItem('level1item2', itemName)}
-                    setCompleted={(completed) => setCompletedForItem('level1item2', completed)}
-                    testId="level1item2"
-                    label="Task 2" />
-                <ToDoItem itemName={toDoItems.level1MiniBoss.itemName}
-                    enabled={toDoItems.level1item1.completed && toDoItems.level1item2.completed}
-                    completed={toDoItems.level1MiniBoss.completed}
-                    setItemName={(itemName) => setItemNameForItem('level1MiniBoss', itemName)}
-                    setCompleted={(completed) => setCompletedForItem('level1MiniBoss', completed)}
-                    testId="level1MiniBoss"
-                    label="Mini Boss 1"
-                    boss={true} />
-            </fieldset>
+            <LevelTasks
+                toDoItems={toDoItems}
+                index={0}
+                setItemNameForItem={setItemNameForItem}
+                setCompletedForItem={setCompletedForItem} />
 
             {
-                toDoItems.level1MiniBoss.itemName !== '' ?
-                    (<fieldset className={collapsed ? 'collapsed' : ''}>
-                        <legend onClick={() => toggleLevel2CollapsedState()}>{collapsed ? '+' : '-'} Level 2 Tasks</legend>
-                        <ToDoItem itemName={toDoItems.level2item1.itemName}
-                            enabled={toDoItems.level2item1.itemName !== ''}
-                            completed={toDoItems.level2item1.completed}
-                            setItemName={(itemName) => setItemNameForItem('level2item1', itemName)}
-                            setCompleted={(completed) => setCompletedForItem('level2item1', completed)}
-                            testId="level2item1"
-                            label="Task 3" />
-                        <ToDoItem itemName={toDoItems.level2item2.itemName}
-                            enabled={toDoItems.level2item2.itemName !== ''}
-                            completed={toDoItems.level2item2.completed}
-                            setItemName={(itemName) => setItemNameForItem('level2item2', itemName)}
-                            setCompleted={(completed) => setCompletedForItem('level2item2', completed)}
-                            testId="level2item2"
-                            label="Task 4" />
-                        <ToDoItem itemName={toDoItems.level2MiniBoss.itemName}
-                            enabled={toDoItems.level2item1.completed && toDoItems.level2item2.completed}
-                            completed={toDoItems.level2MiniBoss.completed}
-                            setItemName={(itemName) => setItemNameForItem('level2MiniBoss', itemName)}
-                            setCompleted={(completed) => setCompletedForItem('level2MiniBoss', completed)}
-                            testId="level2MiniBoss"
-                            label="Mini Boss 2"
-                            boss={true} />
-                    </fieldset>)
+                toDoItems[0].miniBoss.itemName !== '' ?
+                    (<LevelTasks
+                        toDoItems={toDoItems}
+                        index={1}
+                        setItemNameForItem={setItemNameForItem}
+                        setCompletedForItem={setCompletedForItem}
+                        collapsedState={collapsedState}
+                        toggleLevel2CollapsedState={toggleLevel2CollapsedState} />
+                    )
                     : ''
             }
 
-            <fieldset>
-                <legend>Boss Task</legend>
-                <ToDoItem itemName={toDoItems.toDoBoss.itemName}
-                    enabled={
-                        (toDoItems.level1MiniBoss.completed && toDoItems.level2MiniBoss.completed) ||
-                        (toDoItems.level1MiniBoss.completed && toDoItems.level2MiniBoss.itemName === '')
-                    }
-                    completed={toDoItems.toDoBoss.completed}
-                    setItemName={(itemName) => setItemNameForItem('toDoBoss', itemName)}
-                    setCompleted={(completed) => setCompletedForItem('toDoBoss', completed)}
-                    testId="toDoBoss"
-                    label="Main Boss"
-                    boss={true} />
-            </fieldset>
+            <BossTask toDoItems={toDoItems}
+                setItemNameForItem={setItemNameForItem}
+                setCompletedForItem={setCompletedForItem} />
         </div>
     );
 }

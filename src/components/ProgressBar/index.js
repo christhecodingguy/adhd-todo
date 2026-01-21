@@ -10,12 +10,12 @@ const factors = {
 };
 
 
-function progressPoints({itemName, itemType, completed}) {
+function progressPoints({ itemName, itemType, completed }) {
     const count = factors[itemType] || 1;
-    return Array.from({ length: count }, (_, index) => (<div 
-            key={`${itemName.replace(/\W/g, '')}-${index}`} 
-            className={`progress-point${completed ? " completed" : ""}`}
-        >&nbsp;</div>));
+    return Array.from({ length: count }, (_, index) => (<div
+        key={`${itemName.replace(/\W/g, '')}-${index}`}
+        className={`progress-point${completed ? " completed" : ""}`}
+    >&nbsp;</div>));
 }
 
 function isToDoListFilled(progressItems) {
@@ -27,11 +27,13 @@ function isToDoListFilled(progressItems) {
 }
 
 export default function ProgressBar({ toDoItems }) {
-    const progressItems = Object.values(toDoItems).filter((item) => item.itemName.trim() !== '');
+    const progressItems = Object.values(toDoItems)
+        .flatMap(level => Object.values(level))
+        .filter((item) => item.itemName.trim() !== '');
 
-    const toDoListStarterPoint = { 
+    const toDoListStarterPoint = {
         itemName: 'to do list filled in',
-        itemType: ITEM_TYPES.ITEM, 
+        itemType: ITEM_TYPES.ITEM,
         completed: isToDoListFilled(progressItems),
     };
 
