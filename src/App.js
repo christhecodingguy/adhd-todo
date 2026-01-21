@@ -22,22 +22,7 @@ const initialToDoItemsList = [
   }
 ];
 
-function cleanLocalstorage() {
-  const toDoItems = localStorage.getItem('toDoItems');
-  if (toDoItems) {
-    try {
-      const parsedItems = JSON.parse(toDoItems);
-      if (!Array.isArray(parsedItems)) {
-        localStorage.removeItem('toDoItems');
-      }
-    } catch {
-      localStorage.removeItem('toDoItems');
-    }
-  }
-}
-
 function App() {
-  cleanLocalstorage();
   const [toDoItems, setToDoItems] = useLocalstorage('toDoItems', { ...initialToDoItemsList });
   const [formDirtyState, setFormDirtyState] = useLocalstorage('formDirtyState', { isDirty: false });
 
