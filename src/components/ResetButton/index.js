@@ -1,12 +1,15 @@
 import React from 'react';
 import './ResetButton.css';
+import { confirm } from '../../shared/confirm.js';
 
 export function ResetButton({ resetToDoItems }) {
     function confirmAndReset() {
-        const userConfirmed = window.confirm('Are you sure you want to reset the to-do list? This action cannot be undone.');
-        if (userConfirmed) {
-            resetToDoItems();
-        }
+        confirm('Are you sure you want to reset the to-do list? This action cannot be undone.')
+            .then(userConfirmed => {
+                if (userConfirmed) {
+                    resetToDoItems();
+                }
+            });
     }
 
     return (
