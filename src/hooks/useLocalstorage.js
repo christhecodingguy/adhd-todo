@@ -1,5 +1,14 @@
 import { useState } from 'react';
 
+function safeGetItem(key) {
+    try {
+        return localStorage.getItem(key);
+    } catch (e) {
+        console.log('Error reading from localStorage', e);
+        return null;
+    }
+}
+
 function safeParse(jsonString, fallback) {
     try {
         return typeof jsonString === 'string' ? JSON.parse(jsonString) : fallback;
@@ -9,14 +18,14 @@ function safeParse(jsonString, fallback) {
 }
 
 export function useLocalstorage(key, initialValue) {
-    const storedData = safeParse(localStorage.getItem(key), initialValue);
+    const storedData = safeParse(safeGetItem(key), initialValue);
     const [state, setState] = useState(Object.keys(storedData).length >= Object.keys(initialValue).length ? storedData : initialValue);
 
     function updateStore(newState) {
-        const updatedState = {
+        const updatedState = key !== 'toDoItems' ? {
             ...state,
             ...typeof newState === 'function' ? newState(state) : newState
-        };
+        } : typeof newState === 'function' ? newState(state) : newState;
 
         try {
             localStorage.setItem(key, JSON.stringify(updatedState));

@@ -27,7 +27,7 @@ function isToDoListFilled(progressItems) {
 }
 
 export default function ProgressBar({ toDoItems }) {
-    const progressItems = Object.values(toDoItems)
+    const progressItems = toDoItems
         .flatMap(level => Object.values(level))
         .filter((item) => item.itemName.trim() !== '');
 

@@ -1,44 +1,45 @@
+import { useEffect } from 'react';
 import { useLocalstorage } from './hooks/useLocalstorage';
 
 import './App.css';
-import { ITEM_TYPES } from './const';
 import ToDoForm from './components/ToDoForm';
 import ProgressBar from './components/ProgressBar';
 import { ResetButton } from './components/ResetButton';
+import { isToDoItemsList, getInitialToDoItemsList } from './shared/toDoItemsList';
 
-const initialToDoItemsList = [
-  {
-    item1: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-    item2: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-    miniBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.MINI_BOSS },
-  },
-  {
-    item1: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-    item2: { itemName: '', completed: false, itemType: ITEM_TYPES.ITEM },
-    miniBoss: { itemName: '', completed: false, itemType: ITEM_TYPES.MINI_BOSS },
-  },
-  {
-    boss: { itemName: '', completed: false, itemType: ITEM_TYPES.BOSS },
-  }
-];
+const initialToDoItemsList = getInitialToDoItemsList();
 
 function App() {
-  const [toDoItems, setToDoItems] = useLocalstorage('toDoItems', { ...initialToDoItemsList });
+  const [toDoItems, setToDoItems] = useLocalstorage('toDoItems', [...initialToDoItemsList]);
   const [formDirtyState, setFormDirtyState] = useLocalstorage('formDirtyState', { isDirty: false });
 
   function resetToDoItems() {
-    setToDoItems({ ...initialToDoItemsList });
+    setToDoItems([...initialToDoItemsList]);
     setFormDirtyState({ isDirty: false });
   }
 
-  function updateTodoItems(newToDoItems) {
+  function updateToDoItems(newToDoItems) {
+    const toDoItemState = typeof newToDoItems === 'function' ? newToDoItems(toDoItems) : newToDoItems;
+
+    if (!isToDoItemsList(toDoItemState)) {
+      console.error('Invalid toDoItems structure:', toDoItemState);
+      return;
+    }
+
     setToDoItems(newToDoItems);
     setFormDirtyState({ isDirty: true });
   }
 
+  useEffect(() => {
+    if (!isToDoItemsList(toDoItems)) {
+      resetToDoItems();
+    }
+  }, [toDoItems]);
+
   return (
     <div className="App container">
-      <ToDoForm toDoItems={toDoItems} setToDoItems={updateTodoItems} formDirtyState={formDirtyState} />
+      <h1>ADHD To-Do List</h1>
+      <ToDoForm toDoItems={toDoItems} setToDoItems={updateToDoItems} formDirtyState={formDirtyState} />
       <ResetButton resetToDoItems={resetToDoItems} />
       <ProgressBar toDoItems={toDoItems} />
     </div>

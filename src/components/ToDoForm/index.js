@@ -18,7 +18,7 @@ export default function ToDoForm({ toDoItems, setToDoItems, formDirtyState }) {
 
     function setStateForItem(index, itemKey, key, state) {
         setToDoItems(currentItemsState => {
-            const newItemState = [...Object.values(currentItemsState)];
+            const newItemState = [...currentItemsState];
             newItemState[index] = {
                 ...newItemState[index],
                 [itemKey]: {
@@ -36,7 +36,7 @@ export default function ToDoForm({ toDoItems, setToDoItems, formDirtyState }) {
     function toggleLevel2CollapsedState() {
         if (!collapsedState.collapsed) {
             setToDoItems(currentItemsState => {
-                const newItemState = [...Object.values(currentItemsState)];
+                const newItemState = [...currentItemsState];
                 newItemState[1] = {
                     item1: { itemName: '', completed: false, itemType: 'item' },
                     item2: { itemName: '', completed: false, itemType: 'item' },
@@ -51,7 +51,6 @@ export default function ToDoForm({ toDoItems, setToDoItems, formDirtyState }) {
 
     return (
         <div id="to-do-form">
-            <h1>ADHD To-Do List</h1>
             <LevelTasks
                 toDoItems={toDoItems}
                 index={0}
