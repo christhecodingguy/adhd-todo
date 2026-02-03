@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import ToDoItem from './ToDoItem';
 
 export default function BossTask({ toDoItems, setItemNameForItem, setCompletedForItem }) {
@@ -19,3 +21,18 @@ export default function BossTask({ toDoItems, setItemNameForItem, setCompletedFo
         </fieldset>
     );
 }
+
+BossTask.propTypes = {
+    toDoItems: PropTypes.arrayOf(PropTypes.shape({
+        miniBoss: PropTypes.shape({
+            itemName: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+        }).isRequired,
+        boss: PropTypes.shape({
+            itemName: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+        }).isRequired,
+    })).isRequired,
+    setItemNameForItem: PropTypes.func.isRequired,
+    setCompletedForItem: PropTypes.func.isRequired,
+};

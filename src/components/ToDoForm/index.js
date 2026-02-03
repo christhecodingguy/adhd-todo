@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import { useLocalstorage } from '../../hooks/useLocalstorage';
 
 import LevelTasks from './LevelTasks';
@@ -76,3 +78,11 @@ export default function ToDoForm({ toDoItems, setToDoItems, formDirtyState }) {
         </div>
     );
 }
+
+ToDoForm.propTypes = {
+    toDoItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setToDoItems: PropTypes.func.isRequired,
+    formDirtyState: PropTypes.shape({
+        isDirty: PropTypes.bool.isRequired,
+    }).isRequired,
+};

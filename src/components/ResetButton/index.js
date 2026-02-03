@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './ResetButton.css';
 import { confirm } from '../../shared/confirm.js';
 
@@ -18,3 +20,7 @@ export function ResetButton({ resetToDoItems }) {
         </button>
     );
 }
+
+ResetButton.propTypes = {
+    resetToDoItems: PropTypes.func.isRequired,
+};

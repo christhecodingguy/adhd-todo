@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import ToDoItem from './ToDoItem';
 
 export default function LevelTasks({
@@ -43,3 +45,27 @@ export default function LevelTasks({
         </fieldset>
     );
 }
+
+LevelTasks.propTypes = {
+    toDoItems: PropTypes.arrayOf(PropTypes.shape({
+        item1: PropTypes.shape({
+            itemName: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+        }).isRequired,
+        item2: PropTypes.shape({
+            itemName: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+        }).isRequired,
+        miniBoss: PropTypes.shape({
+            itemName: PropTypes.string.isRequired,
+            completed: PropTypes.bool.isRequired,
+        }).isRequired,
+    })).isRequired,
+    setItemNameForItem: PropTypes.func.isRequired,
+    setCompletedForItem: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    collapsedState: PropTypes.shape({
+        collapsed: PropTypes.bool.isRequired,
+    }),
+    toggleLevel2CollapsedState: PropTypes.func,
+};

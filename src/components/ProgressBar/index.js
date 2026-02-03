@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./ProgressBar.css";
 
 import { ITEM_TYPES } from "../../const";
@@ -44,3 +45,7 @@ export default function ProgressBar({ toDoItems }) {
         </fieldset>
     );
 }
+
+ProgressBar.propTypes = {
+    toDoItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

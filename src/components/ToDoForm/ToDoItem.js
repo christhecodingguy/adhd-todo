@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import './ToDoItem.css';
 
 export default function ToDoItem({ itemName, completed, setCompleted, setItemName, enabled = true, testId, label = null, boss }) {
@@ -19,3 +21,14 @@ export default function ToDoItem({ itemName, completed, setCompleted, setItemNam
         </div>
     );
 }
+
+ToDoItem.propTypes = {
+    itemName: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    setCompleted: PropTypes.func.isRequired,
+    setItemName: PropTypes.func.isRequired,
+    enabled: PropTypes.bool,
+    testId: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    boss: PropTypes.bool,
+};
