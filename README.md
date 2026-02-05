@@ -1,18 +1,11 @@
 To do:
 - [x] create base checklist
 - [x] style base checklist
-- [ ] store state in localstorage (so you can leave and come back)
+- [x] store state in localstorage (so you can leave and come back)
     - [x] Get localstorage working transparently
-    - [ ] test localstorage hook (if feasible?)
-- [ ] create and style progress bar
+    - [x] test localstorage hook (if feasible?)
+- [x] create and style progress bar
     - [x] test creation of progress points
-    - [ ] test completion state (if we can?)
+    - [x] test completion state (if we can?)
 - [x] add clear/reset button/behavior
-- [ ] add timer for tasks
-- [ ] add settings to define timer duration
 - [ ] Rewards list for mini bosses and big boss completion
-
-Fun stuff:
-- [ ] Add fun styles
-- [ ] Themes
-- [ ] other customization?
