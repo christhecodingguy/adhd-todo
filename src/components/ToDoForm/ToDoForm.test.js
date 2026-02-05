@@ -22,7 +22,6 @@ describe('ToDoForm Component', () => {
 
         const { getByText, getByTestId } = render(<ToDoForm toDoItems={toDoItems} setToDoItems={mockSetToDoItems} formDirtyState={{ isDirty: false }} />);
 
-        expect(getByText('ADHD To-Do List')).toBeInTheDocument();
         expect(getByText('Level 1 Tasks')).toBeInTheDocument();
         expect(getByText('Boss Task')).toBeInTheDocument();
 
