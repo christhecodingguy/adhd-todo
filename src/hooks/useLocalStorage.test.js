@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
+import { useLocalstorage } from './useLocalstorage';
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -21,7 +22,6 @@ Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
 });
 
-import { useLocalstorage } from './useLocalstorage';
 
 describe('useLocalstorage', () => {
     beforeEach(() => {
